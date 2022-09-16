@@ -21,3 +21,69 @@ multibranchPipelineJob('test-inline-job') {
         }
     }
 }
+
+multibranchPipelineJob('test-jte-job') {
+    branchSources {
+        github {
+            id('test-inline-job')
+            repoOwner('solarwinds-anton-orlov')
+            repository('jenkins-test-project')
+            includes('*')
+        }
+    }
+    factory {
+        templateBranchProjectFactory {
+            configurationPath('pipeline_config.groovy')
+            scriptPath('Jenkinsfile')
+        }
+    }
+    properties {
+        templateConfigFolderProperty {
+            tier {
+                configurationProvider {
+                    scmPipelineConfigurationProvider {
+                        scm {
+                            gitSCM {
+                                userRemoteConfigs {
+                                    userRemoteConfig {
+                                        name("test-jte-config")
+                                        url("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                    }
+                                }
+                                branches {
+                                    branchSpec {
+                                        name("*/main")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                librarySources {
+                    librarySource {
+                        libraryProvider {
+                            scmLibraryProvider {
+                                baseDir("libraries")
+                                scm {
+                                    gitSCM {
+                                        userRemoteConfigs {
+                                            userRemoteConfig {
+                                                name("test-jte-config")
+                                                url("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                            }
+                                        }
+                                        branches {
+                                            branchSpec {
+                                                name("*/main")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
