@@ -48,6 +48,8 @@ multibranchPipelineJob('test-jte-job') {
                                     userRemoteConfig {
                                         name("test-jte-config")
                                         url("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                        refspec("+refs/heads/main:refs/remotes/origin/main")
+                                        credentialsId("")
                                     }
                                 }
                                 branches {
@@ -68,8 +70,10 @@ multibranchPipelineJob('test-jte-job') {
                                     gitSCM {
                                         userRemoteConfigs {
                                             userRemoteConfig {
-                                                name("test-jte-config")
+                                                name("test-jte-library")
                                                 url("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                                refspec("+refs/heads/main:refs/remotes/origin/main")
+                                                credentialsId("")
                                             }
                                         }
                                         branches {
