@@ -57,6 +57,12 @@ multibranchPipelineJob('test-jte-job') {
                                         name("*/main")
                                     }
                                 }
+                                browser {
+                                    gitWeb {
+                                        repoUrl("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                    }
+                                }
+                                gitTool("git")
                             }
                         }
                     }
@@ -81,6 +87,12 @@ multibranchPipelineJob('test-jte-job') {
                                                 name("*/main")
                                             }
                                         }
+                                        browser {
+                                            gitWeb {
+                                                repoUrl("https://github.com/solarwinds-anton-orlov/jenkins-jte")
+                                            }
+                                        }
+                                        gitTool("git")
                                     }
                                 }
                             }
