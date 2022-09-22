@@ -25,7 +25,7 @@ multibranchPipelineJob('test-inline-job') {
 multibranchPipelineJob('test-jte-job') {
     branchSources {
         github {
-            id('test-inline-job')
+            id('test-jte-job')
             repoOwner('solarwinds-anton-orlov')
             repository('jenkins-test-project')
             includes('*')
@@ -98,6 +98,45 @@ multibranchPipelineJob('test-jte-job') {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+multibranchPipelineJob('test-cfg-job') {
+    branchSources {
+        github {
+            id('test-cfg-job')
+            repoOwner('solarwinds-anton-orlov')
+            repository('jenkins-test-project')
+            includes('*')
+        }
+    }
+    factory {
+        configDrivenWorkflowBranchProjectFactory {
+            scriptPath(".pipeline.yaml")
+            jenkinsFileScm {
+                gitSCM {
+                    userRemoteConfigs {
+                        userRemoteConfig {
+                            name("test-cfg-config")
+                            url("https://github.com/solarwinds-anton-orlov/jenkins-cfg-pipeline")
+                            refspec("+refs/heads/main:refs/remotes/origin/main")
+                            credentialsId("")
+                        }
+                    }
+                    branches {
+                        branchSpec {
+                            name("*/main")
+                        }
+                    }
+                    browser {
+                        gitWeb {
+                            repoUrl("https://github.com/solarwinds-anton-orlov/jenkins-cfg-pipeline")
+                        }
+                    }
+                    gitTool("git")
                 }
             }
         }
